@@ -1,0 +1,36 @@
+# Entity Relationship Diagram
+# re: https://app.quickdatabasediagrams.com
+
+department
+-
+dept_no PK text
+dept_name text
+
+employee
+-
+emp_no PK int IDENTITY
+emp_title_id FK >- title.title_id
+birth_date datetime
+first_name text
+last_name text
+sex text
+hire_date datetime
+
+salary
+-
+emp_no PK FK -0 employee.emp_no
+
+title
+-
+title_id PK text
+title text
+
+department_employee
+-
+emp_no PK FK >- employee.emp_no
+dept_no PK FK >- department.dept_no
+
+department_manager
+-
+dept_no PK FK >- department.dept_no
+emp_no PK FK >- employee.emp_no
