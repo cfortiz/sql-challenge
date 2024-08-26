@@ -10,11 +10,11 @@ employee
 -
 emp_no PK int IDENTITY
 emp_title_id char(5) FK >- title.title_id
-birth_date datetime
+birth_date date
 first_name varchar(30)
 last_name varchar(30)
 sex char(1)
-hire_date datetime
+hire_date date
 
 salary
 -
