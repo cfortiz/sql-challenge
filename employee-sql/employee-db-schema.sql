@@ -1,5 +1,14 @@
--- Departments
+-- Drop tables
+/* -- Uncomment these drop statements to drop tables before re-creating them.
 DROP TABLE IF EXISTS department;
+DROP TABLE IF EXISTS title;
+DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS salary;
+DROP TABLE IF EXISTS department_employee;
+DROP TABLE IF EXISTS department_manager;
+*/
+
+-- Departments
 CREATE TABLE IF NOT EXISTS department (
 	dept_no CHAR(4) NOT NULL,
     dept_name VARCHAR(30) NOT NULL,
@@ -7,7 +16,6 @@ CREATE TABLE IF NOT EXISTS department (
 );
 
 -- Titles
-DROP TABLE IF EXISTS title;
 CREATE TABLE IF NOT EXISTS title (
     title_id CHAR(5) NOT NULL,
     title VARCHAR(20) NOT NULL,
@@ -15,7 +23,6 @@ CREATE TABLE IF NOT EXISTS title (
 );
 
 -- Employees
-DROP TABLE IF EXISTS employee;
 CREATE TABLE IF NOT EXISTS employee (
     emp_no INT NOT NULL,
     emp_title_id CHAR(5) NOT NULL,
@@ -30,7 +37,6 @@ CREATE TABLE IF NOT EXISTS employee (
 );
 
 -- Salaries
-DROP TABLE IF EXISTS salary;
 CREATE TABLE IF NOT EXISTS salary (
 	emp_no INT NOT NULL,
 	salary INT NOT NULL,
@@ -40,7 +46,6 @@ CREATE TABLE IF NOT EXISTS salary (
 );
 
 -- Department employees
-DROP TABLE IF EXISTS department_employee;
 CREATE TABLE IF NOT EXISTS department_employee (
     emp_no INT NOT NULL,
     dept_no CHAR(4) NOT NULL,
@@ -52,7 +57,6 @@ CREATE TABLE IF NOT EXISTS department_employee (
 );
 
 -- Department managers
-DROP TABLE IF EXISTS department_manager;
 CREATE TABLE IF NOT EXISTS department_manager (
     dept_no CHAR(4) NOT NULL,
     emp_no INT NOT NULL,
