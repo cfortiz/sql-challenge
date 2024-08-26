@@ -1,5 +1,5 @@
 -- Drop tables
-/* -- Uncomment these drop statements to drop tables before re-creating them.
+/* -- Uncomment drop statements to re-create tables.  Requires CSV re-import
 DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS title;
 DROP TABLE IF EXISTS employee;
@@ -8,21 +8,20 @@ DROP TABLE IF EXISTS department_employee;
 DROP TABLE IF EXISTS department_manager;
 */
 
--- Departments
+-- Create tables
+
 CREATE TABLE IF NOT EXISTS department (
 	dept_no CHAR(4) NOT NULL,
     dept_name VARCHAR(30) NOT NULL,
     CONSTRAINT department_pkey PRIMARY KEY (dept_no)
 );
 
--- Titles
 CREATE TABLE IF NOT EXISTS title (
     title_id CHAR(5) NOT NULL,
     title VARCHAR(20) NOT NULL,
     CONSTRAINT title_pkey PRIMARY KEY (title_id)
 );
 
--- Employees
 CREATE TABLE IF NOT EXISTS employee (
     emp_no INT NOT NULL,
     emp_title_id CHAR(5) NOT NULL,
@@ -36,7 +35,6 @@ CREATE TABLE IF NOT EXISTS employee (
     REFERENCES title (title_id)
 );
 
--- Salaries
 CREATE TABLE IF NOT EXISTS salary (
 	emp_no INT NOT NULL,
 	salary INT NOT NULL,
@@ -45,7 +43,6 @@ CREATE TABLE IF NOT EXISTS salary (
 		REFERENCES employee (emp_no)
 );
 
--- Department employees
 CREATE TABLE IF NOT EXISTS department_employee (
     emp_no INT NOT NULL,
     dept_no CHAR(4) NOT NULL,
@@ -56,7 +53,6 @@ CREATE TABLE IF NOT EXISTS department_employee (
         REFERENCES department (dept_no)
 );
 
--- Department managers
 CREATE TABLE IF NOT EXISTS department_manager (
     dept_no CHAR(4) NOT NULL,
     emp_no INT NOT NULL,
@@ -66,3 +62,16 @@ CREATE TABLE IF NOT EXISTS department_manager (
     CONSTRAINT department_manager_employee_fkey FOREIGN KEY (emp_no)
         REFERENCES employee (emp_no)
 );
+
+-- Parse employee datetime fields
+ALTER TABLE employee ADD COLUMN parsed_birth_date DATE;
+UPDATE employee
+SET parsed_birth_date = TO_DATE(birth_date, 'MM/DD/YYYY');
+ALTER TABLE employee DROP COLUMN birth_date;
+ALTER TABLE employee RENAME COLUMN parsed_birth_date TO birth_date;
+
+ALTER TABLE employee ADD COLUMN parsed_hire_date DATE;
+UPDATE employee
+SET parsed_hire_date = TO_DATE(hire_date, 'MM/DD/YYYY');
+ALTER TABLE employee DROP COLUMN hire_date;
+ALTER TABLE employee RENAME COLUMN parsed_hire_date TO hire_date;
